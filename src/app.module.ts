@@ -3,9 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
 import { TransformInterceptor } from './common/interceptor/transform.interceptor';
+import { LoggingInterceptor } from './common/interceptor/loggin.interceptor';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { LoggingInterceptor } from './common/interceptor/loggin.interceptor';
+import { RolesGuard } from './common/guard/roles/roles.guard';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { LoggingInterceptor } from './common/interceptor/loggin.interceptor';
     { provide: APP_INTERCEPTOR, useClass: LoggingInterceptor },
     //guards
     { provide: APP_GUARD, useClass: ThrottlerGuard },
+    { provide: APP_GUARD, useClass: RolesGuard },
   ],
 })
 export class AppModule {}
